@@ -4,3 +4,15 @@
   box-sizing: border-box;
 }
 
+letter {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+letter.correct {
+  color: green;
+}
+
+letter.wrong {
+  color: red;
+}
