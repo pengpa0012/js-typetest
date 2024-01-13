@@ -16,3 +16,18 @@ letter.correct {
 letter.wrong {
   color: red;
 }
+
+letter.cursor {
+  position: relative;
+}
+
+letter.cursor::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  border-radius: 2px;
+  background: #000;
+}

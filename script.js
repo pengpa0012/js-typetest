@@ -7,27 +7,38 @@ text.split("").forEach(el => {
   content.innerHTML += `<letter>${el}</letter>`
 })
 
-const letterIndex = document.querySelectorAll("letter")
+const allLetter = document.querySelectorAll("letter")
+
 
 
 window.addEventListener("keydown", (e) => {
 
   if(e.key == "Backspace") {
-    letterIndex[index].classList.remove("correct")
-    letterIndex[index].classList.remove("wrong")
+    allLetter[index].classList.remove("correct")
+    allLetter[index].classList.remove("wrong")
     index--
+    updateCursor()
     return
   }
   const currCharacter = content.textContent.split("")[index]
 
   if(e.key.toLocaleLowerCase() == currCharacter.toLocaleLowerCase()) {
     console.log("CORRECT")
-    letterIndex[index].classList.add("correct")
+    allLetter[index].classList.remove("wrong")
+    allLetter[index].classList.add("correct")
     index++
   } else {
-    letterIndex[index].classList.add("wrong")
+    allLetter[index].classList.add("wrong")
     console.log("WRONG")
     index++
   }
+  updateCursor()
 })
+
+function updateCursor() {
+  allLetter.forEach(el => {
+    el.classList.remove("cursor")
+    allLetter[index].classList.add("cursor")
+  })
+}
 
