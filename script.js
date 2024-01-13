@@ -40,6 +40,8 @@ window.addEventListener("keydown", (e) => {
 function updateCursor() {
   allLetter.forEach(el => {
     el.classList.remove("cursor")
+    allLetter[index].classList.remove("correct")
+    allLetter[index].classList.remove("wrong")
     allLetter[index].classList.add("cursor")
   })
 }
