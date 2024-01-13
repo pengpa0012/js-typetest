@@ -12,7 +12,8 @@ const allLetter = document.querySelectorAll("letter")
 
 
 window.addEventListener("keydown", (e) => {
-
+  console.log(e.key)
+  if(e.key == "Shift") return
   if(e.key == "Backspace") {
     allLetter[index].classList.remove("correct")
     allLetter[index].classList.remove("wrong")
@@ -22,7 +23,7 @@ window.addEventListener("keydown", (e) => {
   }
   const currCharacter = content.textContent.split("")[index]
 
-  if(e.key.toLocaleLowerCase() == currCharacter.toLocaleLowerCase()) {
+  if(e.key == currCharacter) {
     console.log("CORRECT")
     allLetter[index].classList.remove("wrong")
     allLetter[index].classList.add("correct")
@@ -41,4 +42,3 @@ function updateCursor() {
     allLetter[index].classList.add("cursor")
   })
 }
-
