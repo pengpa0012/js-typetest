@@ -8,7 +8,7 @@ text.split("").forEach(el => {
 })
 
 const allLetter = document.querySelectorAll("letter")
-
+updateCursor()
 
 
 window.addEventListener("keydown", (e) => {
@@ -17,6 +17,7 @@ window.addEventListener("keydown", (e) => {
   if(e.key == "Backspace") {
     allLetter[index].classList.remove("correct")
     allLetter[index].classList.remove("wrong")
+    if(index == 0) return
     index--
     updateCursor()
     return
