@@ -2,6 +2,7 @@ const content = document.querySelector("#content")
 
 let index = 0
 let text = "This is a sample text"
+let loading = false
 
 text.split("").forEach(el => {
   content.innerHTML += `<letter>${el}</letter>`
@@ -12,6 +13,7 @@ updateCursor()
 
 
 window.addEventListener("keydown", async (e) => {
+  if(loading) return
   if(e.key == "Shift") return
   if(e.key == "Backspace") {
     allLetter[index].classList.remove("correct")
@@ -64,9 +66,11 @@ async function addNewWord() {
 }
 
 async function fetchNewWord() {
+  loading = true
   return fetch("https://random-word-api.herokuapp.com/word?length=15")
   .then(res => res.json())
   .then(data => {
+    loading = false
     return data[0]
   })
   .catch(console.error)
