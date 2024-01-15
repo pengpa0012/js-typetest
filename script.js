@@ -1,18 +1,17 @@
 const content = document.querySelector("#content")
 
 let index = 0
-const text = "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptates iusto doloribus rem, in facere repellat deserunt. Et sequi aperiam, facere dolorum quasi numquam, soluta corporis voluptatum odit assumenda similique ducimus tempora ad tenetur mollitia nostrum illo harum? Magni odio cumque provident impedit ad qui quod, vero recusandae amet ex praesentium!"
+let text = "This is a sample text"
 
 text.split("").forEach(el => {
   content.innerHTML += `<letter>${el}</letter>`
 })
 
-const allLetter = document.querySelectorAll("letter")
+let allLetter = document.querySelectorAll("letter")
 updateCursor()
 
 
-window.addEventListener("keydown", (e) => {
-  console.log(e.key)
+window.addEventListener("keydown", async (e) => {
   if(e.key == "Shift") return
   if(e.key == "Backspace") {
     allLetter[index].classList.remove("correct")
@@ -24,16 +23,21 @@ window.addEventListener("keydown", (e) => {
   }
   const currCharacter = content.textContent.split("")[index]
 
+ 
+
   if(e.key == currCharacter) {
-    console.log("CORRECT")
     allLetter[index].classList.remove("wrong")
     allLetter[index].classList.add("correct")
-    index++
   } else {
     allLetter[index].classList.add("wrong")
-    console.log("WRONG")
-    index++
   }
+
+  if (text.split("").length - 1 == index) {
+    addNewWord()
+    return
+  }
+  
+  index++
   updateCursor()
 })
 
@@ -45,3 +49,27 @@ function updateCursor() {
     allLetter[index].classList.add("cursor")
   })
 }
+
+async function addNewWord() {
+  // fetch new word
+  index = 0
+  text = await fetchNewWord()
+  content.innerHTML = ""
+
+  text.split("").forEach(el => {
+    content.innerHTML += `<letter>${el}</letter>`
+  })
+  allLetter = document.querySelectorAll("letter")
+  updateCursor()
+}
+
+async function fetchNewWord() {
+  return fetch("https://random-word-api.herokuapp.com/word?length=15")
+  .then(res => res.json())
+  .then(data => {
+    return data[0]
+  })
+  .catch(console.error)
+}
+
+// Add checker for correct typed word
