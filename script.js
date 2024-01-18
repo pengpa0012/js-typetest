@@ -1,8 +1,10 @@
 const content = document.querySelector("#content")
+const pointsContent = document.querySelector("#points")
 
 let index = 0
 let text = "This is a sample text"
 let loading = false
+let points = 0
 
 text.split("").forEach(el => {
   content.innerHTML += `<letter>${el}</letter>`
@@ -35,6 +37,13 @@ window.addEventListener("keydown", async (e) => {
   }
 
   if (text.split("").length - 1 == index) {
+    // increment points if correct
+    const allCorrect = Array.from(allLetter).every(el => el.classList.contains("correct"))
+    
+    if(allCorrect) {
+      points++
+      pointsContent.textContent = points
+    }
     addNewWord()
     return
   }
@@ -75,5 +84,3 @@ async function fetchNewWord() {
   })
   .catch(console.error)
 }
-
-// Add checker for correct typed word
