@@ -1,10 +1,14 @@
 const content = document.querySelector("#content")
 const pointsContent = document.querySelector("#points")
+const gameMenu = document.querySelector("#game-menu")
+const startMenu = document.querySelector("#start-menu")
+const startBtn = document.querySelector(".start-btn")
 
 let index = 0
 let text = "This is a sample text"
 let loading = false
 let points = 0
+let gameStart = false
 
 text.split("").forEach(el => {
   content.innerHTML += `<letter>${el}</letter>`
@@ -13,10 +17,14 @@ text.split("").forEach(el => {
 let allLetter = document.querySelectorAll("letter")
 updateCursor()
 
+startBtn.addEventListener("click", () => {
+  gameMenu.classList.remove("hidden")
+  startMenu.classList.add("hidden")
+})
+
 
 window.addEventListener("keydown", async (e) => {
-  if(loading) return
-  if(e.key == "Shift") return
+  if(loading || !gameStart || e.key == "Shift") return
   if(e.key == "Backspace") {
     allLetter[index].classList.remove("correct")
     allLetter[index].classList.remove("wrong")
@@ -39,7 +47,7 @@ window.addEventListener("keydown", async (e) => {
   if (text.split("").length - 1 == index) {
     // increment points if correct
     const allCorrect = Array.from(allLetter).every(el => el.classList.contains("correct"))
-    
+
     if(allCorrect) {
       points++
       pointsContent.textContent = points
