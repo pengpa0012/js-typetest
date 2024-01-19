@@ -20,6 +20,7 @@ updateCursor()
 startBtn.addEventListener("click", () => {
   gameMenu.classList.remove("hidden")
   startMenu.classList.add("hidden")
+  gameStart = true
 })
 
 
