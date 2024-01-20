@@ -12,7 +12,7 @@ let text = "This is a sample text"
 let loading = false
 let points = 0
 let gameStart = false
-let wordLength, timeLimit
+let wordLength = 5, timeLimit = 1 * 60
 
 text.split("").forEach(el => {
   content.innerHTML += `<letter>${el}</letter>`
@@ -35,14 +35,12 @@ wordLengthSelect.addEventListener("input", (e) => {
 })
 
 timeLimitSelect.addEventListener("input", (e) => {
-  timeLimit = e.target.value
+  timeLimit = e.target.value * 60
   console.log(e.target.value)
 })
 
 window.addEventListener("keydown", async (e) => {
   if(loading || !gameStart || e.key == "Shift") return
-
-
 
   if(e.key == "Backspace") {
     allLetter[index].classList.remove("correct")
@@ -105,6 +103,8 @@ function startTime(duration) {
   let time = duration
   setInterval(() => {
     if(time <= -1) {
+      // show score menu here then add route to start menu
+      gameStart = false
       clearInterval(this)
       return
     }
@@ -116,7 +116,7 @@ function startTime(duration) {
 
 async function fetchNewWord() {
   loading = true
-  return fetch("https://random-word-api.herokuapp.com/word?length=15")
+  return fetch(`https://random-word-api.herokuapp.com/word?length=${wordLength}`)
   .then(res => res.json())
   .then(data => {
     loading = false
