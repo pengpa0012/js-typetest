@@ -1,14 +1,18 @@
 const content = document.querySelector("#content")
 const pointsContent = document.querySelector("#points")
+const timeContent = document.querySelector("#time")
 const gameMenu = document.querySelector("#game-menu")
 const startMenu = document.querySelector("#start-menu")
 const startBtn = document.querySelector(".start-btn")
+const wordLengthSelect = document.querySelector(".word-length")
+const timeLimitSelect = document.querySelector(".time-limit")
 
 let index = 0
 let text = "This is a sample text"
 let loading = false
 let points = 0
 let gameStart = false
+let wordLength, timeLimit
 
 text.split("").forEach(el => {
   content.innerHTML += `<letter>${el}</letter>`
@@ -21,11 +25,25 @@ startBtn.addEventListener("click", () => {
   gameMenu.classList.remove("hidden")
   startMenu.classList.add("hidden")
   gameStart = true
+  // start setTimeout here 
+  startTime(timeLimit)
 })
 
+wordLengthSelect.addEventListener("input", (e) => {
+  wordLength = e.target.value
+  console.log(e.target.value)
+})
+
+timeLimitSelect.addEventListener("input", (e) => {
+  timeLimit = e.target.value
+  console.log(e.target.value)
+})
 
 window.addEventListener("keydown", async (e) => {
   if(loading || !gameStart || e.key == "Shift") return
+
+
+
   if(e.key == "Backspace") {
     allLetter[index].classList.remove("correct")
     allLetter[index].classList.remove("wrong")
@@ -81,6 +99,19 @@ async function addNewWord() {
   })
   allLetter = document.querySelectorAll("letter")
   updateCursor()
+}
+
+function startTime(duration) {
+  let time = duration
+  setInterval(() => {
+    if(time <= -1) {
+      clearInterval(this)
+      return
+    }
+    console.log(time)
+    timeContent.textContent = time
+    time--
+  }, 1000)
 }
 
 async function fetchNewWord() {

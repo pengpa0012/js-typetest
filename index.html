@@ -10,7 +10,10 @@
 </head>
 <body>
     <div class="py-12 max-w-7xl mx-auto p-6 hidden" id="game-menu">
-      <p class="text-2xl mb-12">Points: <span id="points"></span></p>
+      <div class="flex items-center justify-between">
+        <p class="text-2xl mb-12">Points: <span id="points"></span></p>
+        <p class="text-2xl mb-12">Time: <span id="time"></span></p>
+      </div>
       <div id="content" class="text-center"></div>
       <!-- <button class="bg-green-500 py-2 px-4 rounded-md flex mx-auto my-12 text-white">Generate</button> -->
     </div>
@@ -19,7 +22,7 @@
       <div class="flex gap-5 mb-12">
         <div class="flex items-center gap-2">
           <p class="text-center w-full">Word length</p>
-          <select class="w-full p-2 border rounded-md focus:outline-none min-w-[120px]">
+          <select class="w-full p-2 border rounded-md focus:outline-none min-w-[120px] word-length">
             <option value="5" class="p-2">5 Letters</option>
             <option value="10" class="p-2">10 Letters</option>
             <option value="15" class="p-2">15 Letters</option>
@@ -27,7 +30,7 @@
         </div>
         <div class="flex items-center gap-2">
           <p class="text-center w-full">Time Limit</p>
-          <select class="w-full p-2 border rounded-md focus:outline-none min-w-[120px]">
+          <select class="w-full p-2 border rounded-md focus:outline-none min-w-[120px] time-limit">
             <option value="1" class="p-2">1 minute</option>
             <option value="5" class="p-2">5 minutes</option>
             <option value="10" class="p-2">10 minutes</option>
