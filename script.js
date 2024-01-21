@@ -1,9 +1,11 @@
 const content = document.querySelector("#content")
-const pointsContent = document.querySelector("#points")
+const pointsContent = document.querySelectorAll(".points")
 const timeContent = document.querySelector("#time")
 const gameMenu = document.querySelector("#game-menu")
+const endMenu = document.querySelector("#end-menu")
 const startMenu = document.querySelector("#start-menu")
 const startBtn = document.querySelector(".start-btn")
+const restartBtn = document.querySelector(".restart-btn")
 const wordLengthSelect = document.querySelector(".word-length")
 const timeLimitSelect = document.querySelector(".time-limit")
 
@@ -12,7 +14,8 @@ let text = "This is a sample text"
 let loading = false
 let points = 0
 let gameStart = false
-let wordLength = 5, timeLimit = 1 * 60
+let endScreen = false
+let wordLength = 5, timeLimit = 5
 
 text.split("").forEach(el => {
   content.innerHTML += `<letter>${el}</letter>`
@@ -29,14 +32,23 @@ startBtn.addEventListener("click", () => {
   startTime(timeLimit)
 })
 
+restartBtn.addEventListener("click", () => {
+  gameMenu.classList.add("hidden")
+  endMenu.classList.add("hidden")
+  startMenu.classList.remove("hidden")
+  points = 0
+  pointsContent.forEach(el => {
+    el.textContent = points
+  })
+  addNewWord()
+})
+
 wordLengthSelect.addEventListener("input", (e) => {
   wordLength = e.target.value
-  console.log(e.target.value)
 })
 
 timeLimitSelect.addEventListener("input", (e) => {
   timeLimit = e.target.value * 60
-  console.log(e.target.value)
 })
 
 window.addEventListener("keydown", async (e) => {
@@ -67,7 +79,9 @@ window.addEventListener("keydown", async (e) => {
 
     if(allCorrect) {
       points++
-      pointsContent.textContent = points
+      pointsContent.forEach(el => {
+        el.textContent = points
+      })
     }
     addNewWord()
     return
@@ -101,11 +115,13 @@ async function addNewWord() {
 
 function startTime(duration) {
   let time = duration
-  setInterval(() => {
+  let trigger = setInterval(function () {
     if(time <= -1) {
       // show score menu here then add route to start menu
       gameStart = false
-      clearInterval(this)
+      gameMenu.classList.add("hidden")
+      endMenu.classList.remove("hidden")
+      clearInterval(trigger)
       return
     }
     console.log(time)
