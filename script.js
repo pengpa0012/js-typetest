@@ -15,7 +15,7 @@ let loading = false
 let points = 0
 let gameStart = false
 let endScreen = false
-let wordLength = 5, timeLimit = 5
+let wordLength = 5, timeLimit = 1 * 60
 
 text.split("").forEach(el => {
   content.innerHTML += `<letter>${el}</letter>`
